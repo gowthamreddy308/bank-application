@@ -1,0 +1,17 @@
+table ,div{
+    width: 100%;
+  }
+  .filter {
+    font-size: 14px;
+  }
+  .card{
+    background-color: rgb(209, 99, 26)
+  }
+  
+  /* td, th {
+    width: 25%;
+  } */
+  mat-form-field{
+    margin-left:30px
+  }
+  

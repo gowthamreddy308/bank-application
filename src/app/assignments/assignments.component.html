@@ -1,0 +1,59 @@
+<mat-card class="card">
+  <h1 style="text-align: center">Bank Search Application</h1>
+  <br>
+  <mat-form-field>
+    <mat-label>Choose Your City</mat-label>
+    <mat-select [(ngModel)]="city">
+      <mat-option *ngFor="let city of cities" [value]="city.value" (click)="settingBankData(city.value)">
+        {{city.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  </mat-form-field>
+  <br>
+
+  <mat-progress-bar mode="indeterminate" color="warn" *ngIf="progressloder"></mat-progress-bar>
+
+  <table mat-table [dataSource]="groupdataSource" class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let ELEMENT_DATA1" style="cursor: pointer;" (click)="toggleSelected(ELEMENT_DATA1)">
+        <button mat-icon-button color="accent">
+          <mat-icon (click)="ELEMENT_DATA1.disabled = !ELEMENT_DATA1.disabled">
+            {{getstorage(ELEMENT_DATA1) ? 'favorite' : 'favorite_border'}}</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="bank_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Bank Name</th>
+      <td mat-cell *matCellDef="let ELEMENT_DATA1"
+        (click)="redirectToDetails(ELEMENT_DATA1.bank_id,ELEMENT_DATA1.bank_name,ELEMENT_DATA1.ifsc,ELEMENT_DATA1.branch)"
+        style="cursor: pointer;">
+        {{ELEMENT_DATA1['bank_name']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ifsc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> IFSC </th>
+      <td mat-cell *matCellDef="let ELEMENT_DATA1"> {{ELEMENT_DATA1['ifsc']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="bank_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Bank ID </th>
+      <td mat-cell *matCellDef="let ELEMENT_DATA1"> {{ELEMENT_DATA1['bank_id']}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="branch">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch </th>
+      <td mat-cell *matCellDef="let ELEMENT_DATA1"> {{ELEMENT_DATA1['branch']}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedYearColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedYearColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10,30,50,70,100,150,200,250,300]" showFirstLastButtons></mat-paginator>
+</mat-card>
